@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\PromotionEngine\PromotionEngine.csproj" />
+    <ProjectReference Include="..\..\PromotionEngine.csproj" />
   </ItemGroup>
 
 </Project>
