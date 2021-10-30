@@ -28,5 +28,35 @@ namespace Test
             }
             
         }
+
+        [Test]
+        public void PomotionConditionHasIntQuantityField()
+        {
+            PromotionCondition pc = new PromotionCondition();
+            if ((pc.GetType().GetProperty("Quantity") == null) || (pc.GetType().GetProperty("Quantity").PropertyType != typeof(int)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+
+        }
+
+        [Test]
+        public void PomotionConditionHasIntSubstituteUnitPriceField()
+        {
+            PromotionCondition pc = new PromotionCondition();
+            if ((pc.GetType().GetProperty("SubstituteUnitPrice") == null) || (pc.GetType().GetProperty("SubstituteUnitPrice").PropertyType != typeof(int)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+
+        }
     }
 }

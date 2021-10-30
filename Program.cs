@@ -35,7 +35,7 @@ namespace PromotionEngine
                     {
                         {
                             'A',
-                            new PromotionCondition {SkuId ='A', Quantity= 3, SubstitueUnitPrice= 130 }
+                            new PromotionCondition {SkuId ='A', Quantity= 3, SubstituteUnitPrice= 130 }
                         }
                     }
                 },
@@ -47,11 +47,11 @@ namespace PromotionEngine
                     {
                         {
                             'B',
-                            new PromotionCondition {SkuId ='B', Quantity = 2, SubstitueUnitPrice = 45 }
+                            new PromotionCondition {SkuId ='B', Quantity = 2, SubstituteUnitPrice = 45 }
                         },
                         {
                             'D',
-                            new PromotionCondition {SkuId ='D', Quantity = 1, SubstitueUnitPrice = 130 }
+                            new PromotionCondition {SkuId ='D', Quantity = 1, SubstituteUnitPrice = 130 }
                         }
                     }
                 }

@@ -30,10 +30,9 @@ namespace PromotionEngine
         public char SkuId { get; set; }
 
         public int Quantity { get; set; }
-        public int SubstitueUnitPrice { get; set; }
+        public int SubstituteUnitPrice { get; set; }
         
         public PromotionCondition()
         { }
-
     }
 }
