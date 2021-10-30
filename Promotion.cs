@@ -19,6 +19,11 @@ namespace PromotionEngine
         {
 
         }
+
+        public void AddPromotionCondition()
+        {
+            throw new Exception("AddPromotionCondition not implemented in Promotion");
+        }
 }
     public class PromotionCondition
     {
