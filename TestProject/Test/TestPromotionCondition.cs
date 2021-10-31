@@ -65,9 +65,17 @@ namespace Test
         {
             PromotionCondition pc1 = new PromotionCondition() { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 };
             PromotionCondition pc2 = new PromotionCondition() { SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 70 };
+
+            if (pc1.Equals(pc2))
+            {
+                Assert.Fail();
+            }
+
+            pc1.SkuId = pc2.SkuId;
+
             if (!pc1.Equals(pc2))
             {
-                Assert.Pass();
+                Assert.Fail();
             }
         }
 

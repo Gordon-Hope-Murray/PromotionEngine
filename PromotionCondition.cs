@@ -12,7 +12,7 @@ namespace PromotionEngine
         public PromotionCondition()
         { }
 
-        bool IEquatable<PromotionCondition>.Equals(PromotionCondition other)
+        public bool Equals(PromotionCondition other)
         {
            if (this.SkuId == other.SkuId )
            { 

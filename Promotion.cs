@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PromotionEngine
 {
-    public class Promotion : IPromotion
+    public class Promotion : IPromotion , IEquatable<Promotion>
     {
         public int PromotionID { get; set; }
 
@@ -23,6 +23,18 @@ namespace PromotionEngine
         public void AddPromotionCondition()
         {
             throw new Exception("AddPromotionCondition not implemented in Promotion");
+        }
+
+        public bool Equals(Promotion other)
+        {
+            if(this.PromotionID == other.PromotionID )
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
    
