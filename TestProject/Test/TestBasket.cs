@@ -12,10 +12,10 @@ namespace TestProject1
         }
 
         [Test]
-        public void PomotionConditionHasIntPromotionIDField()
+        public void BasketHasPromotionsField()
         {
             Basket basket = new Basket();
-            if ((basket.GetType().GetProperty("appliedPromotions") == null) || (basket.GetType().GetProperty("appliedPromotions").PropertyType != typeof(List<Promotion>)))
+            if ((basket.GetType().GetProperty("AppliedPromotions") == null) || (basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<Promotion>)))
             {
                 Assert.Fail();
             }
@@ -25,5 +25,35 @@ namespace TestProject1
             }
 
         }
+
+        [Test]
+        public void BasketHaStockKeepingUnitsField()
+        {
+            Basket basket = new Basket();
+            if ((basket.GetType().GetProperty("StockKeepingUnits") == null) || (basket.GetType().GetProperty("StockKeepingUnits").PropertyType != typeof(Dictionary<char, int>)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+
+        }
+
+        [Test]
+        public void AddsItemToBasket()
+        {
+            Basket basket = new Basket();
+            basket.AddItem('A');
+            if (basket.StockKeepingUnits['A'] != 1)
+            {
+                Assert.Fail();
+            }
+
+        }
+
+
+
     }
 }

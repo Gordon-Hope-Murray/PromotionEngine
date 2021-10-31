@@ -51,8 +51,8 @@ namespace Test
         public void AddsPromotionThrowsException()
         {
             Promotion promo = new Promotion();
-            var pc = Substitute.For<IPromotionCondition>();
-            Assert.Throws<Exception>(() => { promo.AddPromotionCondition((PromotionCondition)pc); },null, new Exception("AddPromotionCondition not implemented in Promotion"));
+            //var pc = Substitute.For<IPromotionCondition>();
+          //  Assert.Throws<Exception>(() => { promo.AddPromotionCondition(new PromotionCondition { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }); },null, new Exception("AddPromotionCondition not implemented in Promotion"));
 
 
         }
@@ -68,6 +68,13 @@ namespace Test
                 Assert.Fail();
             }
 
+            if (promo.PromotionConditions['A'].SkuId != 'A')
+            {
+                Assert.Fail();
+            }
+
+            // Check an Argument Excpetion gets thrown if you try Adding More than 1 Condition for an SKU
+            Assert.Throws<ArgumentException>(() => { promo.AddPromotionCondition(new PromotionCondition { SkuId = 'A', Quantity = 4, SubstituteUnitPrice = 150 }); }, null, new ArgumentException("An item with the same key has already been added. Key: A not implemented in Promotion"));
 
         }
     }

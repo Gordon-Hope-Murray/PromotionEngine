@@ -13,6 +13,7 @@ namespace PromotionEngine
 
         public Promotion()
         {
+            this.PromotionConditions = new Dictionary<char, PromotionCondition>() ;
         }
 
         public Promotion(List<PromotionCondition> promotions)
@@ -23,8 +24,6 @@ namespace PromotionEngine
         public void AddPromotionCondition(PromotionCondition promotionCondition)
         {
             this.PromotionConditions.Add(promotionCondition.SkuId, promotionCondition);
-
-            throw new Exception("AddPromotionCondition not implemented in Promotion");
         }
 
         public bool Equals(Promotion other)
