@@ -25,14 +25,5 @@ namespace PromotionEngine
             throw new Exception("AddPromotionCondition not implemented in Promotion");
         }
     }
-    public class PromotionCondition
-    {
-        public char SkuId { get; set; }
-
-        public int Quantity { get; set; }
-        public int SubstituteUnitPrice { get; set; }
-        
-        public PromotionCondition()
-        { }
-    }
+   
 }

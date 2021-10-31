@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 using NUnit.Framework;
 using PromotionEngine;
 
 namespace Test
 {
-    class TestPomotionCondition
+    class TestPomotionCondition 
     {
         [SetUp]
         public void Setup()
@@ -58,5 +59,17 @@ namespace Test
             }
 
         }
+
+        [Test]
+        public void PomotionConditionisEquatable()
+        {
+            PromotionCondition pc1 = new PromotionCondition() { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 };
+            PromotionCondition pc2 = new PromotionCondition() { SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 70 };
+            if (!pc1.Equals(pc2))
+            {
+                Assert.Pass();
+            }
+        }
+
     }
 }
