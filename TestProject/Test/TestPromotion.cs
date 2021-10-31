@@ -1,4 +1,8 @@
 using NUnit.Framework;
+using PromotionEngine;
+using NSubstitute;
+using NSubstituteAutoMocker;
+using System;
 
 namespace Test
 {
@@ -11,9 +15,29 @@ namespace Test
         }
 
         [Test]
-        public void Test1()
+        public void PomotionConditionHasIntPromotionIDField()
         {
-            Assert.Pass();
+            Promotion pc = new Promotion();
+            if ((pc.GetType().GetProperty("PromotionID") == null) || (pc.GetType().GetProperty("PromotionID").PropertyType != typeof(int)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+
         }
+
+
+        [Test]
+        public void AddsPromotionThrowsException()
+        {
+            Promotion promo = new  Promotion();
+            Assert.Throws<Exception>(() => { promo.AddPromotionCondition(); });
+          
+
+        }
+
     }
 }

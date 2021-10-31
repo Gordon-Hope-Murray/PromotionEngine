@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PromotionEngine
 {
-    public class Basket
+    public class Basket 
     {
         public List<Promotion> appliedPromotions { get; set; }
 

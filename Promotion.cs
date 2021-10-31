@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace PromotionEngine
 {
-    public class Promotion
+    public class Promotion : IPromotion
     {
         public int PromotionID { get; set; }
 
@@ -24,7 +24,7 @@ namespace PromotionEngine
         {
             throw new Exception("AddPromotionCondition not implemented in Promotion");
         }
-}
+    }
     public class PromotionCondition
     {
         public char SkuId { get; set; }
