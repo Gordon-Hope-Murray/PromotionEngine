@@ -20,8 +20,10 @@ namespace PromotionEngine
 
         }
 
-        public void AddPromotionCondition()
+        public void AddPromotionCondition(PromotionCondition promotionCondition)
         {
+            this.PromotionConditions.Add(promotionCondition.SkuId, promotionCondition);
+
             throw new Exception("AddPromotionCondition not implemented in Promotion");
         }
 

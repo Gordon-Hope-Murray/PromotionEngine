@@ -7,6 +7,6 @@ namespace PromotionEngine
         Dictionary<char, PromotionCondition> PromotionConditions { get; set; }
         int PromotionID { get; set; }
 
-        void AddPromotionCondition();
+        void AddPromotionCondition(PromotionCondition promotionCondition) ;
     }
 }
