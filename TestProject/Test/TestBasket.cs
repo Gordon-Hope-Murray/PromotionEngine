@@ -2,9 +2,9 @@ using NUnit.Framework;
 using PromotionEngine;
 using System.Collections.Generic;
 
-namespace TestProject1
+namespace TestProject
 {
-    public class TestBasket    
+    public class TestBasket
     {
         [SetUp]
         public void Setup()
@@ -15,7 +15,7 @@ namespace TestProject1
         public void BasketHasPromotionsField()
         {
             Basket basket = new Basket();
-            if ((basket.GetType().GetProperty("AppliedPromotions") == null) || (basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<Promotion>)))
+            if (basket.GetType().GetProperty("AppliedPromotions") == null || basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<Promotion>))
             {
                 Assert.Fail();
             }
@@ -30,7 +30,7 @@ namespace TestProject1
         public void BasketHaStockKeepingUnitsField()
         {
             Basket basket = new Basket();
-            if ((basket.GetType().GetProperty("StockKeepingUnits") == null) || (basket.GetType().GetProperty("StockKeepingUnits").PropertyType != typeof(Dictionary<char, int>)))
+            if (basket.GetType().GetProperty("StockKeepingUnits") == null || basket.GetType().GetProperty("StockKeepingUnits").PropertyType != typeof(Dictionary<char, int>))
             {
                 Assert.Fail();
             }

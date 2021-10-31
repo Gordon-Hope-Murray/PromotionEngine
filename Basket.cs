@@ -42,7 +42,7 @@ namespace PromotionEngine
             this.StockKeepingUnits[stockKeepingUnit] = quantity;
         }
 
-        public void ApplyPromotion (Promotion promotion)
+        public void AddPromotion (Promotion promotion)
         { 
             this.AppliedPromotions.Add(promotion); 
         }
