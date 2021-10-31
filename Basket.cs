@@ -14,6 +14,7 @@ namespace PromotionEngine
         public Basket()
         {
             this.StockKeepingUnits = new Dictionary<char, int>();
+            this.AppliedPromotions = new List<Promotion>();
         }
 
         public void AddItem(char stockKeepingUnit)
