@@ -1,11 +1,12 @@
 ﻿namespace PromotionEngine
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    public class StockKeepingUnit
+    public class StockKeepingUnit 
     {
         public StockKeepingUnit()
         {
@@ -20,5 +21,6 @@
         public char StockKeepingUnitId { get; set; }
 
         public int UnitPrice { get; set; }
+
     }
 }

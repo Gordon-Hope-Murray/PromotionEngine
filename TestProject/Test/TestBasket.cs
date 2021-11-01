@@ -7,11 +7,20 @@ namespace TestProject
     public class TestBasket
     {
         private List<Promotion> promotions;
+        private Dictionary<char, int> skusd;
         private List<StockKeepingUnit> skus;
 
         [SetUp]
         public void Setup()
         {
+            this.skusd = new Dictionary<char, int>()
+            {
+                { 'A', 50 },
+                { 'B', 30 },
+                { 'C', 20 },
+                { 'D', 15 },
+            };
+
             this.skus = new List<StockKeepingUnit>
             {
                 new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
@@ -134,8 +143,12 @@ namespace TestProject
             }
         }
 
-        [Test]
-        public void GetsPrice()
+        [TestCase(2, 1, 1, 0, ExpectedResult = 150)]
+        [TestCase(2, 2, 1, 0, ExpectedResult = 180)]
+        [TestCase(2, 1, 2, 0, ExpectedResult = 170)]
+        [TestCase(2, 1, 2, 1, ExpectedResult = 185)]
+
+        public int GetsPriceWithoutPromotion(int unitsA, int unitsB, int unitsC, int unitsD)
         {
             Basket basket = new Basket();
 
@@ -144,11 +157,13 @@ namespace TestProject
                 basket.AddPromotion(p);
             }
 
-            basket.SetQuantity('A', 10);
-            basket.SetQuantity('B', 10);
-            basket.SetQuantity('C', 10);
+            basket.SetQuantity('A', unitsA);
+            basket.SetQuantity('B', unitsB);
+            basket.SetQuantity('C', unitsC);
+            basket.SetQuantity('D', unitsD);
 
-            float price = basket.CalculateCost(this.skus);
+            int price = basket.CalculateCost(this.skusd);
+            return price;
         }
 
         [TestCase(2, 1, 1)]
