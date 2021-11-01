@@ -1,16 +1,15 @@
-using NUnit.Framework;
-using PromotionEngine;
-using NSubstitute;
-using System;
-
 namespace TestProject
 {
+    using System;
+    using NSubstitute;
+    using NUnit.Framework;
+    using PromotionEngine;
+
     public class TestPromotion
     {
         [SetUp]
         public void Setup()
         {
-
         }
 
         [Test]
@@ -25,7 +24,6 @@ namespace TestProject
             {
                 Assert.Pass();
             }
-
         }
 
         [Test]
@@ -48,16 +46,6 @@ namespace TestProject
         }
 
         [Test]
-        public void AddsPromotionThrowsException()
-        {
-            Promotion promo = new Promotion();
-            //var pc = Substitute.For<IPromotionCondition>();
-          //  Assert.Throws<Exception>(() => { promo.AddPromotionCondition(new PromotionCondition { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }); },null, new Exception("AddPromotionCondition not implemented in Promotion"));
-
-
-        }
-
-        [Test]
         public void AddsPromotionConditions()
         {
             Promotion promo = new Promotion();
@@ -75,7 +63,6 @@ namespace TestProject
 
             // Check an Argument Excpetion gets thrown if you try Adding More than 1 Condition for an SKU
             Assert.Throws<ArgumentException>(() => { promo.AddPromotionCondition(new PromotionCondition { SkuId = 'A', Quantity = 4, SubstituteUnitPrice = 150 }); }, null, new ArgumentException("An item with the same key has already been added. Key: A not implemented in Promotion"));
-
         }
     }
 }

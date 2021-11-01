@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NUnit.Framework;
-using PromotionEngine;
-
-namespace TestProject
+﻿namespace TestProject
 {
+    using NUnit.Framework;
+    using PromotionEngine;
+
     class TestStockKeepingUnit
     {
-
         [Test]
         public void PomotionConditionHasCharStockKeepingUnitIdPriceField()
         {
@@ -21,7 +17,6 @@ namespace TestProject
             {
                 Assert.Pass();
             }
-
         }
 
         [Test]
@@ -36,8 +31,6 @@ namespace TestProject
             {
                 Assert.Pass();
             }
-
         }
-
     }
 }

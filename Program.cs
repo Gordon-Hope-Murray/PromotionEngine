@@ -1,14 +1,9 @@
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace PromotionEngine
 {
+    using System.Collections.Generic;
+    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
+
     public class Program
     {
         public static void Main(string[] args)
@@ -20,11 +15,8 @@ namespace PromotionEngine
                 new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
                 new StockKeepingUnit { StockKeepingUnitId = 'B', UnitPrice = 30 },
                 new StockKeepingUnit { StockKeepingUnitId = 'C', UnitPrice = 20 },
-                new StockKeepingUnit { StockKeepingUnitId = 'D', UnitPrice = 15 }
-
+                new StockKeepingUnit { StockKeepingUnitId = 'D', UnitPrice = 15 },
             };
-
-
 
             List<Promotion> promotions = new List<Promotion>
             {
@@ -35,9 +27,9 @@ namespace PromotionEngine
                     {
                         {
                             'A',
-                            new PromotionCondition {SkuId ='A', Quantity= 3, SubstituteUnitPrice= 130 }
-                        }
-                    }
+                            new PromotionCondition { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }
+                        },
+                    },
                 },
 
                 new Promotion
@@ -47,18 +39,16 @@ namespace PromotionEngine
                     {
                         {
                             'B',
-                            new PromotionCondition {SkuId ='B', Quantity = 2, SubstituteUnitPrice = 45 }
+                            new PromotionCondition { SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 45 }
                         },
                         {
                             'D',
-                            new PromotionCondition {SkuId ='D', Quantity = 1, SubstituteUnitPrice = 130 }
-                        }
-                    }
-                }
+                            new PromotionCondition { SkuId = 'D', Quantity = 1, SubstituteUnitPrice = 130 }
+                        },
+                    },
+                },
             };
         }
-
-    
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
@@ -66,7 +56,5 @@ namespace PromotionEngine
                 {
                     webBuilder.UseStartup<Startup>();
                 });
-
-
     }
 }

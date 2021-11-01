@@ -1,33 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Text;
-using NUnit.Framework;
-using PromotionEngine;
-
-namespace TestProject
+﻿namespace TestProject
 {
-    class TestPomotionCondition 
+    using System;
+    using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Text;
+    using NUnit.Framework;
+    using PromotionEngine;
+
+    class TestPromotionCondition
     {
         [SetUp]
         public void Setup()
         {
-
         }
 
         [Test]
         public void PomotionConditionHasCharSkuIdField()
         {
             PromotionCondition pc = new PromotionCondition();
-            if ((pc.GetType().GetProperty("SkuId") == null) || (pc.GetType().GetProperty("SkuId").PropertyType != typeof(char) ))
+            if ((pc.GetType().GetProperty("SkuId") == null) || (pc.GetType().GetProperty("SkuId").PropertyType != typeof(char)))
             {
                 Assert.Fail();
             }
             else
             {
-                Assert.Pass(); 
+                Assert.Pass();
             }
-            
         }
 
         [Test]
@@ -42,7 +40,6 @@ namespace TestProject
             {
                 Assert.Pass();
             }
-
         }
 
         [Test]
@@ -57,7 +54,6 @@ namespace TestProject
             {
                 Assert.Pass();
             }
-
         }
 
         [Test]
@@ -78,6 +74,5 @@ namespace TestProject
                 Assert.Fail();
             }
         }
-
     }
 }

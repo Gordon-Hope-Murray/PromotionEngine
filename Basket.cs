@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PromotionEngine
+﻿namespace PromotionEngine
 {
-    public class Basket 
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    public class Basket
     {
-        public List<Promotion> AppliedPromotions { get; set; }
-
-        public Dictionary<char,int> StockKeepingUnits { get; }
-
         private int total;
 
         public Basket()
@@ -19,9 +15,13 @@ namespace PromotionEngine
             this.AppliedPromotions = new List<Promotion>();
         }
 
+        public List<Promotion> AppliedPromotions { get; set; }
+
+        public Dictionary<char, int> StockKeepingUnits { get; }
+
         public void AddItem(char stockKeepingUnit)
         {
-            if(!this.StockKeepingUnits.ContainsKey(stockKeepingUnit))
+            if (!this.StockKeepingUnits.ContainsKey(stockKeepingUnit))
             {
                 this.StockKeepingUnits.Add(stockKeepingUnit, 1);
             }
@@ -29,7 +29,6 @@ namespace PromotionEngine
             {
                 this.StockKeepingUnits[stockKeepingUnit] = ++this.StockKeepingUnits[stockKeepingUnit];
             }
-            
         }
 
         public void RemoveItem(char stockKeepingUnit)
@@ -45,25 +44,25 @@ namespace PromotionEngine
             this.StockKeepingUnits[stockKeepingUnit] = quantity;
         }
 
-        public void AddPromotion (Promotion promotion)
-        { 
-            this.AppliedPromotions.Add(promotion); 
+        public void AddPromotion(Promotion promotion)
+        {
+            this.AppliedPromotions.Add(promotion);
         }
 
-        public float CalculateCost (List<StockKeepingUnit> skus)
+        public float CalculateCost(List<StockKeepingUnit> skus)
         {
-            var prices = from sku in skus where this.StockKeepingUnits.ContainsKey(sku.StockKeepingUnitId) select this.StockKeepingUnits[sku.StockKeepingUnitId] * sku.UnitPrice ;
-           
-                return this.total;
+            var prices = from sku in skus where this.StockKeepingUnits.ContainsKey(sku.StockKeepingUnitId) select this.StockKeepingUnits[sku.StockKeepingUnitId] * sku.UnitPrice;
+            return this.total;
         }
 
         public int NoOftimespromotionCanBeApplied(Promotion promotion)
         {
             List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
-            foreach( var pc in promotion.PromotionConditions)
+            foreach (var pc in promotion.PromotionConditions)
             {
-                numberOfTimesEachPromotionCanBeApplied.Add(NoOftimesPromotionConditionCanBeApplied(pc.Value));
+                numberOfTimesEachPromotionCanBeApplied.Add(this.NoOftimesPromotionConditionCanBeApplied(pc.Value));
             }
+
             return numberOfTimesEachPromotionCanBeApplied.Min(z => z);
         }
 
