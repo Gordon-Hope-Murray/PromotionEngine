@@ -3,7 +3,7 @@ using PromotionEngine;
 using NSubstitute;
 using System;
 
-namespace Test
+namespace TestProject
 {
     public class TestPromotion
     {

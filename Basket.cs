@@ -50,7 +50,24 @@ namespace PromotionEngine
 
         public float GetPrice ()
         {
+
             throw new Exception("Getprice is not implemented for Basket");
+        }
+
+        public int NoOftimespromotionCanBeApplied(Promotion promotion)
+        {
+            List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
+            foreach( var pc in promotion.PromotionConditions)
+            {
+                numberOfTimesEachPromotionCanBeApplied.Add(NoOftimesPromotionConditionCanBeApplied(pc.Value));
+            }
+            return numberOfTimesEachPromotionCanBeApplied.Min(z => z);
+        }
+
+        public int NoOftimesPromotionConditionCanBeApplied(PromotionCondition promotionCondition)
+        {
+            int remainder = this.StockKeepingUnits[promotionCondition.SkuId] % promotionCondition.Quantity;
+            return (this.StockKeepingUnits[promotionCondition.SkuId] - remainder) / promotionCondition.Quantity;
         }
     }
 }

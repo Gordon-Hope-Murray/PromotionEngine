@@ -5,7 +5,7 @@ using System.Text;
 using NUnit.Framework;
 using PromotionEngine;
 
-namespace Test
+namespace TestProject
 {
     class TestPomotionCondition 
     {

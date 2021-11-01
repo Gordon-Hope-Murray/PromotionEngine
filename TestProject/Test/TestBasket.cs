@@ -11,6 +11,17 @@ namespace TestProject
         [SetUp]
         public void Setup()
         {
+
+            List<StockKeepingUnit> skus = new List<StockKeepingUnit>
+            {
+                new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
+                new StockKeepingUnit { StockKeepingUnitId = 'B', UnitPrice = 30 },
+                new StockKeepingUnit { StockKeepingUnitId = 'C', UnitPrice = 20 },
+                new StockKeepingUnit { StockKeepingUnitId = 'D', UnitPrice = 15 }
+
+            };
+
+
             this.promotions = new List<Promotion>
             {
                 new Promotion
@@ -110,7 +121,7 @@ namespace TestProject
         public void SetsQuantityofItemInBasket()
         {
             Basket basket = new Basket();
-            basket.SetQuantity('A',4);
+            basket.SetQuantity('A', 4);
 
             if (basket.StockKeepingUnits['A'] != 4)
             {
@@ -127,7 +138,59 @@ namespace TestProject
             foreach (Promotion p in this.promotions)
             {
                 basket.AddPromotion(p);
-            }          
+            }
         }
-    }
+
+        [Test]
+        public void GetsPrice()
+        {
+            Basket basket = new Basket();
+
+            foreach (Promotion p in this.promotions)
+            {
+                basket.AddPromotion(p);
+            }
+
+            basket.SetQuantity('A', 10);
+            basket.SetQuantity('B', 10);
+            basket.SetQuantity('C', 10);
+
+            float price = basket.GetPrice();
+            //public float GetPrice()
+        }
+
+
+
+        [TestCase(2, 1, 1)]
+        [TestCase(2, 2, 1)]
+        [TestCase(2, 3, 1)]
+        [TestCase(3, 1, 1)]
+        [TestCase(3, 2, 1)]
+        [TestCase(3, 3, 1)]
+        [TestCase(4, 1, 1)]
+        [TestCase(4, 2, 2)]
+        public void GetsNoOftimesPromotionCanBeApplied(int unitsB,int unitsD, int exptResult)
+        {
+            Basket basket = new Basket();
+            basket.StockKeepingUnits['B'] = unitsB;
+            basket.StockKeepingUnits['D'] = unitsD;
+            int result = basket.NoOftimespromotionCanBeApplied(this.promotions[1]);
+            Assert.AreEqual(exptResult, result);
+        }
+
+        [TestCase(9, 3)]
+        [TestCase(10,3)]
+        [TestCase(11,3)]
+        [TestCase(12,4)]
+        public void GetsNoOftimesPromotionConditionCanBeApplied(int units, int exptResult)
+        {
+            Basket basket = new Basket();
+            basket.StockKeepingUnits['A'] = units;
+            int result = basket.NoOftimesPromotionConditionCanBeApplied(this.promotions[0].PromotionConditions['A']);
+            Assert.AreEqual(exptResult, result);
+                // override object.Equals
+  
+        }
+
+        }
 }
