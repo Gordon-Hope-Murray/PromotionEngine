@@ -8,7 +8,6 @@ namespace TestProject
     {
         private List<Promotion> promotions;
         private Dictionary<char, int> skusd;
-        private List<StockKeepingUnit> skus;
 
         [SetUp]
         public void Setup()
@@ -19,14 +18,6 @@ namespace TestProject
                 { 'B', 30 },
                 { 'C', 20 },
                 { 'D', 15 },
-            };
-
-            this.skus = new List<StockKeepingUnit>
-            {
-                new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
-                new StockKeepingUnit { StockKeepingUnitId = 'B', UnitPrice = 30 },
-                new StockKeepingUnit { StockKeepingUnitId = 'C', UnitPrice = 20 },
-                new StockKeepingUnit { StockKeepingUnitId = 'D', UnitPrice = 15 },
             };
 
             this.promotions = new List<Promotion>
@@ -43,7 +34,7 @@ namespace TestProject
                     },
                 },
 
-                new Promotion
+                 new Promotion
                 {
                     PromotionID = 2,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
@@ -51,6 +42,17 @@ namespace TestProject
                         {
                             'B',
                             new PromotionCondition { SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 45 }
+                        },
+                    },
+                },
+                new Promotion
+                {
+                    PromotionID = 2,
+                    PromotionConditions = new Dictionary<char, PromotionCondition>
+                    {
+                        {
+                            'C',
+                            new PromotionCondition { SkuId = 'B', Quantity = 1, SubstituteUnitPrice = 45 }
                         },
                         {
                             'D',
@@ -166,13 +168,39 @@ namespace TestProject
             return price;
         }
 
+
+        [TestCase(3, 0, 0, 0, ExpectedResult = 130)]
+        [TestCase(1, 0, 0, 0, ExpectedResult = 50)]
+        [TestCase(0, 1, 0, 0, ExpectedResult = 30)]
+        [TestCase(0, 2, 0, 0, ExpectedResult = 45)]
+        [TestCase(4, 3, 0, 0, ExpectedResult = 255)]
+        [TestCase(2, 1, 2, 1, ExpectedResult = 185)]
+
+        public int GetsTotalPriceWithPromotion(int unitsA, int unitsB, int unitsC, int unitsD)
+        {
+            Basket basket = new Basket();
+
+            foreach (Promotion p in this.promotions)
+            {
+                basket.AddPromotion(p);
+            }
+
+            basket.SetQuantity('A', unitsA);
+            basket.SetQuantity('B', unitsB);
+            basket.SetQuantity('C', unitsC);
+            basket.SetQuantity('D', unitsD);
+
+            int price = basket.CalculateCostWithPromotions(this.skusd);
+            return price;
+        }
+
         [TestCase(2, 1, 1)]
         [TestCase(2, 2, 1)]
         [TestCase(2, 3, 1)]
         [TestCase(3, 1, 1)]
         [TestCase(3, 2, 1)]
         [TestCase(3, 3, 1)]
-        [TestCase(4, 1, 1)]
+        [TestCase(4, 1, 2)]
         [TestCase(4, 2, 2)]
         public void GetsNoOftimesPromotionCanBeApplied(int unitsB, int unitsD, int exptResult)
         {

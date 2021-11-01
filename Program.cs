@@ -10,14 +10,6 @@ namespace PromotionEngine
         {
             CreateHostBuilder(args).Build().Run();
 
-            List<StockKeepingUnit> skus = new List<StockKeepingUnit>
-            {
-                new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
-                new StockKeepingUnit { StockKeepingUnitId = 'B', UnitPrice = 30 },
-                new StockKeepingUnit { StockKeepingUnitId = 'C', UnitPrice = 20 },
-                new StockKeepingUnit { StockKeepingUnitId = 'D', UnitPrice = 15 },
-            };
-
             List<Promotion> promotions = new List<Promotion>
             {
                 new Promotion
