@@ -11,6 +11,8 @@ namespace PromotionEngine
 
         public Dictionary<char,int> StockKeepingUnits { get; }
 
+        private int total;
+
         public Basket()
         {
             this.StockKeepingUnits = new Dictionary<char, int>();
@@ -48,10 +50,11 @@ namespace PromotionEngine
             this.AppliedPromotions.Add(promotion); 
         }
 
-        public float GetPrice ()
+        public float CalculateCost (List<StockKeepingUnit> skus)
         {
-
-            throw new Exception("Getprice is not implemented for Basket");
+            var prices = from sku in skus where this.StockKeepingUnits.ContainsKey(sku.StockKeepingUnitId) select this.StockKeepingUnits[sku.StockKeepingUnitId] * sku.UnitPrice ;
+           
+                return this.total;
         }
 
         public int NoOftimespromotionCanBeApplied(Promotion promotion)

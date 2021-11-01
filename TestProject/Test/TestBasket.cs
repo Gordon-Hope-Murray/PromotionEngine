@@ -7,12 +7,13 @@ namespace TestProject
     public class TestBasket
     {
         private List<Promotion> promotions;
+        private List<StockKeepingUnit> skus;
 
         [SetUp]
         public void Setup()
         {
 
-            List<StockKeepingUnit> skus = new List<StockKeepingUnit>
+            this.skus = new List<StockKeepingUnit>
             {
                 new StockKeepingUnit { StockKeepingUnitId = 'A', UnitPrice = 50 },
                 new StockKeepingUnit { StockKeepingUnitId = 'B', UnitPrice = 30 },
@@ -97,7 +98,7 @@ namespace TestProject
         }
 
         [Test]
-        public void RemovesItemToBasket()
+        public void RemovesItemFromBasket()
         {
             Basket basket = new Basket();
             basket.AddItem('A');
@@ -155,7 +156,7 @@ namespace TestProject
             basket.SetQuantity('B', 10);
             basket.SetQuantity('C', 10);
 
-            float price = basket.GetPrice();
+            float price = basket.CalculateCost(this.skus);
             //public float GetPrice()
         }
 
