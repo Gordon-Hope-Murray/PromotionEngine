@@ -15,6 +15,20 @@
         }
 
         [Test]
+        public void PomotionConditionHasIntPromotionConditionIDField()
+        {
+            PromotionCondition pc = new PromotionCondition();
+            if ((pc.GetType().GetProperty("PromotionConditionID") == null) || (pc.GetType().GetProperty("PromotionConditionID").PropertyType != typeof(int)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+        }
+
+        [Test]
         public void PomotionConditionHasCharSkuIdField()
         {
             PromotionCondition pc = new PromotionCondition();

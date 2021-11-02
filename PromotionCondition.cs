@@ -15,6 +15,11 @@
         }
 
         /// <summary>
+        /// Gets Or Sets PromotionConditionID.
+        /// </summary>
+        public int PromotionConditionID { get; set; }
+
+        /// <summary>
         /// Gets Or Sets SkuID.
         /// </summary>
         public char SkuId { get; set; }

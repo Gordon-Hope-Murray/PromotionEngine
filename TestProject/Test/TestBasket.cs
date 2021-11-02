@@ -29,7 +29,7 @@ namespace TestProject
                     {
                         {
                             'A',
-                            new PromotionCondition { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }
+                            new PromotionCondition {PromotionConditionID = 1, SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }
                         },
                     },
                 },
@@ -41,7 +41,7 @@ namespace TestProject
                     {
                         {
                             'B',
-                            new PromotionCondition { SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 45 }
+                            new PromotionCondition {PromotionConditionID = 2, SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 45 }
                         },
                     },
                 },
@@ -52,11 +52,11 @@ namespace TestProject
                     {
                         {
                             'C',
-                            new PromotionCondition { SkuId = 'C', Quantity = 1, }
+                            new PromotionCondition {PromotionConditionID = 3, SkuId = 'C', Quantity = 1, }
                         },
                         {
                             'D',
-                            new PromotionCondition { SkuId = 'D', Quantity = 1, }
+                            new PromotionCondition {PromotionConditionID = 4, SkuId = 'D', Quantity = 1, }
                         },
                     },
                     SubstituteUnitPrice = 30,
