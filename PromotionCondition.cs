@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// PromotionCondition.
+    /// </summary>
     public class PromotionCondition : IEquatable<PromotionCondition>, IPromotionCondition
     {
         /// <summary>
@@ -11,12 +14,26 @@
         {
         }
 
+        /// <summary>
+        /// Gets Or Sets SkuID.
+        /// </summary>
         public char SkuId { get; set; }
 
+        /// <summary>
+        /// Gets Or Sets Quantity.
+        /// </summary>
         public int Quantity { get; set; }
 
+        /// <summary>
+        /// Gets Or Sets SubstituteUnitPrice.
+        /// </summary>
         public int SubstituteUnitPrice { get; set; }
 
+        /// <summary>
+        /// Implements Equatable.
+        /// </summary>
+        /// <param name="other">Promotion condition being compared to.</param>
+        /// <returns>bool indicating equality.</returns>
         public bool Equals(PromotionCondition other)
         {
             if (this.SkuId == other.SkuId)
