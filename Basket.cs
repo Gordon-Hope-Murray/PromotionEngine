@@ -105,11 +105,11 @@
             Dictionary<char, int> copyOfBasketItemCount = this.StockKeepingUnits.ToDictionary(p => p.Key, p => p.Value);
             foreach (Promotion p in this.AppliedPromotions)
             {
-                int noOftimespromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(p);
+                int noOfTimesPromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(p);
                 foreach (var pc in p.PromotionConditions)
                 {
-                    copyOfBasketItemCount[pc.Key] = copyOfBasketItemCount[pc.Key] - (noOftimespromotionCanBeApplied * pc.Value.Quantity);
-                    promotionCoveredTotalCost += pc.Value.SubstituteUnitPrice * noOftimespromotionCanBeApplied;
+                    copyOfBasketItemCount[pc.Key] = copyOfBasketItemCount[pc.Key] - (noOfTimesPromotionCanBeApplied * pc.Value.Quantity);
+                    promotionCoveredTotalCost += pc.Value.SubstituteUnitPrice * noOfTimesPromotionCanBeApplied;
                 }
             }
 

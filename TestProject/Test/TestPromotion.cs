@@ -27,6 +27,20 @@ namespace TestProject
         }
 
         [Test]
+        public void PomotionConditionHasIntSubstituteUnitPriceField()
+        {
+            Promotion p = new Promotion();
+            if ((p.GetType().GetProperty("SubstituteUnitPrice") == null) || (p.GetType().GetProperty("SubstituteUnitPrice").PropertyType != typeof(int)))
+            {
+                Assert.Fail();
+            }
+            else
+            {
+                Assert.Pass();
+            }
+        }
+
+        [Test]
         public void PomotionisEquatable()
         {
             Promotion promo1 = new Promotion() { PromotionID = 1 };

@@ -32,6 +32,11 @@
         public int PromotionID { get; set; }
 
         /// <summary>
+        /// Gets Or Sets SubstituteUnitPrice.
+        /// </summary>
+        public int SubstituteUnitPrice { get; set; }
+
+        /// <summary>
         /// Gets or Sets PromotionConditions property.
         /// </summary>
         public Dictionary<char, PromotionCondition> PromotionConditions { get; set; }

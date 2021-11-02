@@ -34,7 +34,7 @@ namespace TestProject
                     },
                 },
 
-                 new Promotion
+                new Promotion
                 {
                     PromotionID = 2,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
@@ -47,18 +47,19 @@ namespace TestProject
                 },
                 new Promotion
                 {
-                    PromotionID = 2,
+                    PromotionID = 3,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
                     {
                         {
                             'C',
-                            new PromotionCondition { SkuId = 'B', Quantity = 1, SubstituteUnitPrice = 45 }
+                            new PromotionCondition { SkuId = 'C', Quantity = 1, }
                         },
                         {
                             'D',
-                            new PromotionCondition { SkuId = 'D', Quantity = 1, SubstituteUnitPrice = 130 }
+                            new PromotionCondition { SkuId = 'D', Quantity = 1, }
                         },
                     },
+                    SubstituteUnitPrice = 30,
                 },
             };
         }
@@ -119,7 +120,6 @@ namespace TestProject
             {
                 Assert.Fail();
             }
-
         }
 
         [Test]
