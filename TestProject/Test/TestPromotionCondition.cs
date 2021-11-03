@@ -7,7 +7,7 @@
     using NUnit.Framework;
     using PromotionEngine;
 
-    class TestPromotionCondition
+    public class TestPromotionCondition
     {
         [SetUp]
         public void Setup()

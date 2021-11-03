@@ -6,7 +6,7 @@ namespace TestProject
 
     public class TestBasket
     {
-        private List<Promotion> promotions;
+        private List<PromotionBase> promotions;
         private Dictionary<char, int> skusd;
 
         [SetUp]
@@ -20,49 +20,51 @@ namespace TestProject
                 { 'D', 15 },
             };
 
-            this.promotions = new List<Promotion>
+            this.promotions = new List<PromotionBase>
             {
-                new Promotion
+                new PromotionFlat
                 {
                     PromotionID = 1,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
                     {
                         {
                             'A',
-                            new PromotionCondition {PromotionConditionID = 1, SkuId = 'A', Quantity = 3, }
+                            new PromotionCondition { PromotionConditionID = 1, SkuId = 'A', Quantity = 3, }
                         },
                     },
                     SubstituteUnitPrice = 130,
-
+                    PromotionType = PromotionType.Flat,
                 },
 
-                new Promotion
+                new PromotionFlat
                 {
                     PromotionID = 2,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
                     {
                         {
                             'B',
-                            new PromotionCondition {PromotionConditionID = 2, SkuId = 'B', Quantity = 2, }
+                            new PromotionCondition { PromotionConditionID = 2, SkuId = 'B', Quantity = 2, }
                         },
                     },
                     SubstituteUnitPrice = 45,
+                    PromotionType = PromotionType.Flat,
                 },
-                new Promotion
+                new PromotionFlat
                 {
                     PromotionID = 3,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
                     {
                         {
                             'C',
-                            new PromotionCondition {PromotionConditionID = 3, SkuId = 'C', Quantity = 1, }
+                            new PromotionCondition { PromotionConditionID = 3, SkuId = 'C', Quantity = 1, }
                         },
                         {
                             'D',
-                            new PromotionCondition {PromotionConditionID = 4, SkuId = 'D', Quantity = 1, }
+                            new PromotionCondition { PromotionConditionID = 4, SkuId = 'D', Quantity = 1, }
                         },
                     },
                     SubstituteUnitPrice = 30,
+                    PromotionType = PromotionType.Flat,
                 },
             };
         }
@@ -71,7 +73,7 @@ namespace TestProject
         public void BasketHasPromotionsField()
         {
             Basket basket = new Basket();
-            if (basket.GetType().GetProperty("AppliedPromotions") == null || basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<Promotion>))
+            if (basket.GetType().GetProperty("AppliedPromotions") == null || basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<PromotionBase>))
             {
                 Assert.Fail();
             }
@@ -142,7 +144,7 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (Promotion p in this.promotions)
+            foreach (PromotionBase p in this.promotions)
             {
                 basket.AddPromotion(p);
             }
@@ -157,7 +159,7 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (Promotion p in this.promotions)
+            foreach (PromotionFlat p in this.promotions)
             {
                 basket.AddPromotion(p);
             }
@@ -167,7 +169,7 @@ namespace TestProject
             basket.SetQuantity('C', unitsC);
             basket.SetQuantity('D', unitsD);
 
-            int price = basket.CalculateCost(this.skusd , basket.StockKeepingUnits );
+            int price = basket.CalculateCost(this.skusd, basket.StockKeepingUnits);
             return price;
         }
 
@@ -182,7 +184,7 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (Promotion p in this.promotions)
+            foreach (PromotionFlat p in this.promotions)
             {
                 p.IsApplied = true;
                 basket.AddPromotion(p);
@@ -197,33 +199,33 @@ namespace TestProject
             return price;
         }
 
-        [TestCase(2, 1, 1)]
-        [TestCase(2, 2, 1)]
-        [TestCase(2, 3, 1)]
-        [TestCase(3, 1, 1)]
-        [TestCase(3, 2, 1)]
-        [TestCase(3, 3, 1)]
-        [TestCase(4, 1, 2)]
-        [TestCase(4, 2, 2)]
-        public void GetsNoOftimesPromotionCanBeApplied(int unitsB, int unitsD, int exptResult)
+        [TestCase(2, 1, ExpectedResult = 1)]
+        [TestCase(2, 2, ExpectedResult = 1)]
+        [TestCase(2, 3, ExpectedResult = 1)]
+        [TestCase(3, 1, ExpectedResult = 1)]
+        [TestCase(3, 2, ExpectedResult = 1)]
+        [TestCase(3, 3, ExpectedResult = 1)]
+        [TestCase(4, 1, ExpectedResult = 2)]
+        [TestCase(4, 2, ExpectedResult = 2)]
+        public int GetsNoOftimesPromotionCanBeApplied(int unitsB, int unitsD)
         {
             Basket basket = new Basket();
             basket.StockKeepingUnits['B'] = unitsB;
             basket.StockKeepingUnits['D'] = unitsD;
-            int result = basket.NoOftimespromotionCanBeApplied(this.promotions[1]);
-            Assert.AreEqual(exptResult, result);
+            int result = basket.NoOftimespromotionCanBeApplied((PromotionFlat)this.promotions[1]);
+            return result;
         }
 
-        [TestCase(9, 3)]
-        [TestCase(10, 3)]
-        [TestCase(11, 3)]
-        [TestCase(12, 4)]
-        public void GetsNoOftimesPromotionConditionCanBeApplied(int units, int exptResult)
+        [TestCase(9, ExpectedResult = 3)]
+        [TestCase(10, ExpectedResult = 3)]
+        [TestCase(11, ExpectedResult = 3)]
+        [TestCase(12, ExpectedResult = 4)]
+        public int GetsNoOftimesPromotionConditionCanBeApplied(int units)
         {
             Basket basket = new Basket();
             basket.StockKeepingUnits['A'] = units;
             int result = basket.NoOftimesPromotionConditionCanBeApplied(this.promotions[0].PromotionConditions['A']);
-            Assert.AreEqual(exptResult, result);
+            return result;
         }
     }
 }

@@ -17,15 +17,15 @@
         {
             this.StockKeepingUnits = new Dictionary<char, int>();
             this.StockKeepingUnitsNotcoveredByPromotion = new Dictionary<char, int>();
-            this.AppliedPromotions = new List<Promotion>();
+            this.AppliedPromotions = new List<PromotionBase>();
         }
 
-        public int promotionCoveredTotalCost { get; set; }
+        public int PromotionCoveredTotalCost { get; set; }
 
         /// <summary>
         /// Gets or sets AppliedPromotions Property.
         /// </summary>
-        public List<Promotion> AppliedPromotions { get; set; }
+        public List<PromotionBase> AppliedPromotions { get; set; }
 
         /// <summary>
         /// Gets or sets StockKeepingUnits Property.
@@ -85,7 +85,7 @@
         /// Adds Promotion.
         /// </summary>
         /// <param name="promotion">Promotion to Add.</param>
-        public void AddPromotion(Promotion promotion)
+        public void AddPromotion(PromotionBase promotion)
         {
             this.AppliedPromotions.Add(promotion);
         }
@@ -109,6 +109,9 @@
             return totals.Sum();
         }
 
+        /// <summary>
+        /// Applies Promotions.
+        /// </summary>
         public void ApplyPromotions()
         {
             foreach (var promotion in this.AppliedPromotions)
@@ -122,13 +125,13 @@
 
         public int CalculateCostWithPromotions(Dictionary<char, int> priceList)
         {
-            this.promotionCoveredTotalCost = 0;
+            this.PromotionCoveredTotalCost = 0;
             this.ApplyPromotions();
 
-            return this.promotionCoveredTotalCost + this.CalculateCost(priceList, this.StockKeepingUnitsNotcoveredByPromotion);
+            return this.PromotionCoveredTotalCost + this.CalculateCost(priceList, this.StockKeepingUnitsNotcoveredByPromotion);
         }
 
-        // Call a passed-in delegate on each paperback book to process it:
+        // Call a passed-in delegate on each promotion to process it:
         public void ProcessPromotionss(ProcessPromotionCallback processPromotion)
         {
             foreach (var promotion in this.AppliedPromotions)
@@ -145,7 +148,7 @@
         /// </summary>
         /// <param name="promotion">Promotion to Apply.</param>
         /// <returns>int.</returns>
-        public int NoOftimespromotionCanBeApplied(Promotion promotion)
+        public int NoOftimespromotionCanBeApplied(PromotionBase promotion)
         {
             List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
             foreach (var pc in promotion.PromotionConditions)

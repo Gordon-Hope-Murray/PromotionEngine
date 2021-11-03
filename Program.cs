@@ -10,9 +10,9 @@ namespace PromotionEngine
         {
             CreateHostBuilder(args).Build().Run();
 
-            List<Promotion> promotions = new List<Promotion>
+            List<PromotionBase> promotions = new List<PromotionBase>
             {
-                new Promotion
+                new PromotionFlat
                 {
                     PromotionID = 1,
                     PromotionConditions = new Dictionary<char, PromotionCondition>
@@ -24,7 +24,7 @@ namespace PromotionEngine
                     },
                 },
 
-                new Promotion
+                new PromotionFlat
                 {
                     PromotionID = 2,
                     PromotionConditions = new Dictionary<char, PromotionCondition>

@@ -1,26 +1,17 @@
-﻿namespace PromotionEngine
-{
-    using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-    /// <summary>
-    /// Promotion Interface.
-    /// </summary>
+namespace PromotionEngine
+{
     public interface IPromotion
     {
-        /// <summary>
-        /// Gets or Sets PromotionConditions.
-        /// </summary>
+        bool IsApplied { get; set; }
         Dictionary<char, PromotionCondition> PromotionConditions { get; set; }
-
-        /// <summary>
-        /// Gets or Sets PromotionID.
-        /// </summary>
         int PromotionID { get; set; }
+        int SubstituteUnitPrice { get; set; }
 
-        /// <summary>
-        /// Adds Promotion Condition.
-        /// </summary>
-        /// <param name="promotionCondition">The promotionConditionbeing Added.</param>
         void AddPromotionCondition(PromotionCondition promotionCondition);
+        void ApplyPromotion(Basket basket);
+        bool Equals(PromotionBase other);
+        int NoOftimespromotionCanBeApplied(Basket basket);
     }
 }

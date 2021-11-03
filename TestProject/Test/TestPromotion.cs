@@ -15,7 +15,7 @@ namespace TestProject
         [Test]
         public void PomotionHasIntPromotionIDField()
         {
-            Promotion pc = new Promotion();
+            PromotionFlat pc = new PromotionFlat();
             if ((pc.GetType().GetProperty("PromotionID") == null) || (pc.GetType().GetProperty("PromotionID").PropertyType != typeof(int)))
             {
                 Assert.Fail();
@@ -29,7 +29,7 @@ namespace TestProject
         [Test]
         public void PomotionConditionHasIntSubstituteUnitPriceField()
         {
-            Promotion p = new Promotion();
+            PromotionFlat p = new PromotionFlat();
             if ((p.GetType().GetProperty("SubstituteUnitPrice") == null) || (p.GetType().GetProperty("SubstituteUnitPrice").PropertyType != typeof(int)))
             {
                 Assert.Fail();
@@ -43,8 +43,8 @@ namespace TestProject
         [Test]
         public void PomotionisEquatable()
         {
-            Promotion promo1 = new Promotion() { PromotionID = 1 };
-            Promotion promo2 = new Promotion() { PromotionID = 2 };
+            PromotionFlat promo1 = new PromotionFlat() { PromotionID = 1 };
+            PromotionFlat promo2 = new PromotionFlat() { PromotionID = 2 };
 
             if (promo1.Equals(promo2))
             {
@@ -62,7 +62,7 @@ namespace TestProject
         [Test]
         public void AddsPromotionConditions()
         {
-            Promotion promo = new Promotion();
+            PromotionFlat promo = new PromotionFlat();
             promo.AddPromotionCondition(new PromotionCondition { SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 });
 
             if (promo.PromotionConditions.Count != 1)
