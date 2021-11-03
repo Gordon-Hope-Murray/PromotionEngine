@@ -27,6 +27,12 @@
         }
 
         /// <summary>
+        /// Process promotion delegate.
+        /// </summary>
+        /// <param name="basket">Basket To which Promotion Will be Applied.</param>
+        public delegate void ProcessBookCallback(Basket basket);
+
+        /// <summary>
         /// Gets or sets promotionID property.
         /// </summary>
         public int PromotionID { get; set; }
@@ -40,6 +46,49 @@
         /// Gets or Sets PromotionConditions property.
         /// </summary>
         public Dictionary<char, PromotionCondition> PromotionConditions { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether promotion is to be applied to basket or not.
+        /// </summary>
+        public bool IsApplied { get; set; }
+
+        // Call a passed-in delegate on each promotion to process it:
+        // public void ProcessPromotions(ProcessBookCallback processBook)
+        // {
+        //    foreach (KeyValuePair<char,PromotionCondition> b in this.PromotionConditions)
+        //    {
+        //        if (b.Value.)
+        //            // Calling the delegate:
+        //            processBook(b);
+        //    }
+        // }
+
+        public void ApplyPromotion(Basket basket)
+        {
+            int noOfTimesPromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(basket);
+            foreach (var pc in this.PromotionConditions)
+            {
+                basket.StockKeepingUnitsNotcoveredByPromotion[pc.Value.SkuId] = basket.StockKeepingUnits[pc.Value.SkuId] - (noOfTimesPromotionCanBeApplied * pc.Value.Quantity);
+            }
+
+            basket.promotionCoveredTotalCost += this.SubstituteUnitPrice * noOfTimesPromotionCanBeApplied;
+        }
+
+        /// <summary>
+        /// No of times promotion can be applied.
+        /// </summary>
+        /// <param name="basket">basket to Apply Promotion to.</param>
+        /// <returns>int.</returns>
+        public int NoOftimespromotionCanBeApplied(Basket basket)
+        {
+            List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
+            foreach (var pc in this.PromotionConditions)
+            {
+                numberOfTimesEachPromotionCanBeApplied.Add(pc.Value.NoOftimesPromotionConditionCanBeApplied(basket));
+            }
+
+            return numberOfTimesEachPromotionCanBeApplied.Min(z => z);
+        }
 
         /// <summary>
         /// Adds Promotion condition.

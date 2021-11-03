@@ -35,6 +35,17 @@
         public int SubstituteUnitPrice { get; set; }
 
         /// <summary>
+        /// No of times Promotion Condition Can Be Applied.
+        /// </summary>
+        /// <param name="basket">The basket that needs to be checked .</param>
+        /// <returns>int.</returns>
+        public int NoOftimesPromotionConditionCanBeApplied(Basket basket)
+        {
+            int remainder = basket.StockKeepingUnits[this.SkuId] % this.Quantity;
+            return (basket.StockKeepingUnits[this.SkuId] - remainder) / this.Quantity;
+        }
+
+        /// <summary>
         /// Implements Equatable.
         /// </summary>
         /// <param name="other">Promotion condition being compared to.</param>

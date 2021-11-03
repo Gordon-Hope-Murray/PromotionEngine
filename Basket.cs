@@ -16,8 +16,11 @@
         public Basket()
         {
             this.StockKeepingUnits = new Dictionary<char, int>();
+            this.StockKeepingUnitsNotcoveredByPromotion = new Dictionary<char, int>();
             this.AppliedPromotions = new List<Promotion>();
         }
+
+        public int promotionCoveredTotalCost { get; set; }
 
         /// <summary>
         /// Gets or sets AppliedPromotions Property.
@@ -28,6 +31,17 @@
         /// Gets or sets StockKeepingUnits Property.
         /// </summary>
         public Dictionary<char, int> StockKeepingUnits { get; set; }
+
+        /// <summary>
+        /// Gets or sets StockKeepingUnits Property.
+        /// </summary>
+        public Dictionary<char, int> StockKeepingUnitsNotcoveredByPromotion { get; set; }
+
+        /// <summary>
+        /// Process promotion delegate.
+        /// </summary>
+        /// <param name="basket">Basket To which Promotion Will be Applied.</param>
+        public delegate void ProcessPromotionCallback(Basket basket);
 
         /// <summary>
         /// Adds Item to basket.
@@ -79,14 +93,15 @@
         /// <summary>
         /// Calculates Cost Without Promotions.
         /// </summary>
-        /// <param name="skus">Dictionary containing Prices.</param>
+        /// <param name="priceList">Dictionary containing Prices.</param>
+        /// <param name="quantities">Dictionary containing Quantities.</param>
         /// <returns>int.</returns>
-        public int CalculateCost(Dictionary<char, int> skus)
+        public int CalculateCost(Dictionary<char, int> priceList, Dictionary<char, int> quantities)
         {
-            var prices = from id in skus.Keys
-                          where this.StockKeepingUnits.ContainsKey(id)
-                          let quantity = this.StockKeepingUnits[id]
-                          let price = skus[id]
+            var prices = from id in priceList.Keys
+                          where quantities.ContainsKey(id)
+                          let quantity = quantities[id]
+                          let price = priceList[id]
                           select new { id, quantity, price };
 
             var totals = from price in prices select price.quantity * price.price;
@@ -94,29 +109,35 @@
             return totals.Sum();
         }
 
-        /// <summary>
-        /// Calculates Cost With Promotions.
-        /// </summary>
-        /// <param name="skus">Dictionary containing Prices.</param>
-        /// <returns>int.</returns>
-        public int CalculateCostWithPromotions(Dictionary<char, int> skus)
+        public void ApplyPromotions()
         {
-            int promotionCoveredTotalCost = 0;
-            Dictionary<char, int> copyOfBasketItemCount = this.StockKeepingUnits.ToDictionary(p => p.Key, p => p.Value);
-            foreach (Promotion p in this.AppliedPromotions)
+            foreach (var promotion in this.AppliedPromotions)
             {
-                int noOfTimesPromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(p);
-                foreach (var pc in p.PromotionConditions)
+                if (promotion.IsApplied)
                 {
-                    copyOfBasketItemCount[pc.Key] = copyOfBasketItemCount[pc.Key] - (noOfTimesPromotionCanBeApplied * pc.Value.Quantity);
-                    promotionCoveredTotalCost += pc.Value.SubstituteUnitPrice * noOfTimesPromotionCanBeApplied;
+                    promotion.ApplyPromotion(this);
                 }
             }
+        }
 
-            Basket nonpromobasket = new Basket();
-            nonpromobasket.StockKeepingUnits = copyOfBasketItemCount;
-            nonpromobasket.CalculateCost(skus);
-            return promotionCoveredTotalCost + nonpromobasket.CalculateCost(skus);
+        public int CalculateCostWithPromotions(Dictionary<char, int> priceList)
+        {
+            this.promotionCoveredTotalCost = 0;
+            this.ApplyPromotions();
+
+            return this.promotionCoveredTotalCost + this.CalculateCost(priceList, this.StockKeepingUnitsNotcoveredByPromotion);
+        }
+
+        // Call a passed-in delegate on each paperback book to process it:
+        public void ProcessPromotionss(ProcessPromotionCallback processPromotion)
+        {
+            foreach (var promotion in this.AppliedPromotions)
+            {
+                if (promotion.PromotionID == 1)
+                { // Calling the delegate:
+                    processPromotion(this);
+                }
+            }
         }
 
         /// <summary>

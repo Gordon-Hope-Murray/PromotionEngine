@@ -29,9 +29,11 @@ namespace TestProject
                     {
                         {
                             'A',
-                            new PromotionCondition {PromotionConditionID = 1, SkuId = 'A', Quantity = 3, SubstituteUnitPrice = 130 }
+                            new PromotionCondition {PromotionConditionID = 1, SkuId = 'A', Quantity = 3, }
                         },
                     },
+                    SubstituteUnitPrice = 130,
+
                 },
 
                 new Promotion
@@ -41,9 +43,10 @@ namespace TestProject
                     {
                         {
                             'B',
-                            new PromotionCondition {PromotionConditionID = 2, SkuId = 'B', Quantity = 2, SubstituteUnitPrice = 45 }
+                            new PromotionCondition {PromotionConditionID = 2, SkuId = 'B', Quantity = 2, }
                         },
                     },
+                    SubstituteUnitPrice = 45,
                 },
                 new Promotion
                 {
@@ -164,24 +167,24 @@ namespace TestProject
             basket.SetQuantity('C', unitsC);
             basket.SetQuantity('D', unitsD);
 
-            int price = basket.CalculateCost(this.skusd);
+            int price = basket.CalculateCost(this.skusd , basket.StockKeepingUnits );
             return price;
         }
-
 
         [TestCase(3, 0, 0, 0, ExpectedResult = 130)]
         [TestCase(1, 0, 0, 0, ExpectedResult = 50)]
         [TestCase(0, 1, 0, 0, ExpectedResult = 30)]
         [TestCase(0, 2, 0, 0, ExpectedResult = 45)]
         [TestCase(4, 3, 0, 0, ExpectedResult = 255)]
-        [TestCase(2, 1, 2, 1, ExpectedResult = 185)]
+        [TestCase(2, 1, 2, 1, ExpectedResult = 180)]
 
-        public int GetsTotalPriceWithPromotion(int unitsA, int unitsB, int unitsC, int unitsD)
+        public int GetsTotalPriceAfterApplyingPromotion(int unitsA, int unitsB, int unitsC, int unitsD)
         {
             Basket basket = new Basket();
 
             foreach (Promotion p in this.promotions)
             {
+                p.IsApplied = true;
                 basket.AddPromotion(p);
             }
 
