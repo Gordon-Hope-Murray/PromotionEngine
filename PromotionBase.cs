@@ -18,6 +18,9 @@
         Percentage,
     }
 
+    /// <summary>
+    /// Base Promotion Class.
+    /// </summary>
     public abstract class PromotionBase : IEqualityComparer<PromotionBase>, IEnumerable<PromotionBase>
     {
         /// <summary>
@@ -49,12 +52,16 @@
         /// Adds Promotion condition.
         /// </summary>
         /// <param name="promotionCondition">PromotionCondition.</param>
-        public void AddPromotionCondition(PromotionCondition promotionCondition)
+        public void AddPromotionCondition(IPromotionCondition promotionCondition)
         {
-            this.PromotionConditions.Add(promotionCondition.SkuId, promotionCondition);
+            this.PromotionConditions.Add(promotionCondition.SkuId, (PromotionCondition)promotionCondition);
         }
 
-        public abstract void ApplyPromotion(Basket basket);
+        /// <summary>
+        /// Apply Promotion Method Declaration.
+        /// </summary>
+        /// <param name="basket">Basket to Apply Promotion to.</param>
+        public abstract void ApplyPromotion(IBasket basket);
 
         /// <summary>
         /// Implemts Equatable interface.
@@ -73,6 +80,12 @@
             }
         }
 
+        /// <summary>
+        /// Implemts Equatable interface.
+        /// </summary>
+        /// <param name="x">PromotionBase X.</param>
+        /// <param name="y">PromotionBase Y.</param>
+        /// <returns>bool.</returns>
         public bool Equals([AllowNull] PromotionBase x, [AllowNull] PromotionBase y)
         {
             if (x.PromotionID == y.PromotionID)
@@ -92,7 +105,7 @@
 
         public int GetHashCode([DisallowNull] PromotionBase obj)
         {
-            return PromotionID;
+            throw new System.NotImplementedException();
         }
 
         //public IEnumerator<PromotionBase> GetEnumerator()
@@ -105,12 +118,12 @@
         /// </summary>
         /// <param name="basket">basket to Apply Promotion to.</param>
         /// <returns>int.</returns>
-        public int NoOftimespromotionCanBeApplied(Basket basket)
+        public int NoOftimespromotionCanBeApplied(IBasket basket)
         {
             List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
             foreach (var pc in this.PromotionConditions)
             {
-                numberOfTimesEachPromotionCanBeApplied.Add(pc.Value.NoOftimesPromotionConditionCanBeApplied(basket));
+                numberOfTimesEachPromotionCanBeApplied.Add(pc.Value.NoOftimesPromotionConditionCanBeApplied((Basket)basket));
             }
 
             return numberOfTimesEachPromotionCanBeApplied.Min(z => z);
@@ -123,7 +136,7 @@
 
         //IEnumerator IEnumerable.GetEnumerator()
         //{
-        //   // return PromotionID;
+        //
         //    return (IEnumerator<PromotionBase>)(IEnumerator)this.GetEnumerator();
         //}
     }

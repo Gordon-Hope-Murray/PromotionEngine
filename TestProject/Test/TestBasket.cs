@@ -68,11 +68,6 @@ namespace TestProject
                     PromotionType = PromotionType.Flat,
                 },
 
-                //new PromotionPercentage
-                //{
-                //    PromotionID = 4,
-                //    PromotionType = PromotionType.Percentage,
-                //},
             };
         }
 
@@ -186,7 +181,7 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (PromotionFlat p in this.promotions)//.Find(x => x.PromotionType == PromotionType.Flat))
+            foreach (PromotionFlat p in this.promotions) //.Find(x => x.PromotionType == PromotionType.Flat))
             {
                 p.IsApplied = true;
                 basket.AddPromotion(p);
@@ -210,10 +205,9 @@ namespace TestProject
 
             basket.AddPromotion(promotionPercentage);
 
-
             Assert.IsTrue(basket.AppliedPromotions.Count() == 1);
-            //Check an Argument Excpetion gets thrown if you try Adding More than 1 Condition for an SKU
 
+            // Check an Exception gets thrown when trying to apply Promotion with Percentage
             Assert.Throws<Exception>(() => { basket.AppliedPromotions[0].ApplyPromotion(basket); }, null, new Exception("PromotionPercentage.ApplyPromotion not implemented"));
         }
 

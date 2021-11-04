@@ -8,7 +8,7 @@
     /// <summary>
     /// Promotion.
     /// </summary>
-    public class PromotionFlat : PromotionBase, IPromotion, IEquatable<PromotionBase>, IEquatable<PromotionFlat>
+    public class PromotionFlat : PromotionBase, IPromotion, IEquatable<PromotionBase>, IEquatable<IPromotion>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PromotionFlat"/> class.
@@ -27,27 +27,10 @@
         }
 
         /// <summary>
-        /// Process promotion delegate.
-        /// </summary>
-        /// <param name="basket">Basket To which Promotion Will be Applied.</param>
-        public delegate void ProcessBookCallback(Basket basket);
-
-        // Call a passed-in delegate on each promotion to process it:
-        // public void ProcessPromotions(ProcessBookCallback processPromotion)
-        // {
-        //    foreach (KeyValuePair<char,PromotionCondition> b in this.PromotionConditions)
-        //    {
-        //        if (b.Value.)
-        //            // Calling the delegate:
-        //            processPromotion(b);
-        //    }
-        // }
-
-        /// <summary>
         /// Apply Flat Promotion.
         /// </summary>
         /// <param name="basket">basket to Apply Flat Promotion.</param>
-        public override void ApplyPromotion(Basket basket)
+        public override void ApplyPromotion(IBasket basket)
         {
             int noOfTimesPromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(basket);
             foreach (var pc in this.PromotionConditions)
@@ -63,7 +46,7 @@
         /// </summary>
         /// <param name="other">promotion to compare with.</param>
         /// <returns>bool.</returns>
-        public bool Equals(PromotionFlat other)
+        public bool Equals(IPromotion other)
         {
             if (this.PromotionID == other.PromotionID)
             {

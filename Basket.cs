@@ -8,7 +8,7 @@
     /// <summary>
     /// Basket Class.
     /// </summary>
-    public class Basket
+    public class Basket : IBasket
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Basket"/> class.
@@ -36,12 +36,6 @@
         /// Gets or sets StockKeepingUnits Property.
         /// </summary>
         public Dictionary<char, int> StockKeepingUnitsNotcoveredByPromotion { get; set; }
-
-        /// <summary>
-        /// Process promotion delegate.
-        /// </summary>
-        /// <param name="basket">Basket To which Promotion Will be Applied.</param>
-        public delegate void ProcessPromotionCallback(Basket basket);
 
         /// <summary>
         /// Adds Item to basket.
@@ -99,10 +93,10 @@
         public int CalculateCost(Dictionary<char, int> priceList, Dictionary<char, int> quantities)
         {
             var prices = from id in priceList.Keys
-                          where quantities.ContainsKey(id)
-                          let quantity = quantities[id]
-                          let price = priceList[id]
-                          select new { id, quantity, price };
+                         where quantities.ContainsKey(id)
+                         let quantity = quantities[id]
+                         let price = priceList[id]
+                         select new { id, quantity, price };
 
             var totals = from price in prices select price.quantity * price.price;
 
@@ -123,6 +117,11 @@
             }
         }
 
+        /// <summary>
+        /// Applies Promotions and returns total cost with promotions.
+        /// </summary>
+        /// <param name="priceList">Dictionary.<char, int>.</param>
+        /// <returns>cost.</returns>
         public int CalculateCostWithPromotions(Dictionary<char, int> priceList)
         {
             this.PromotionCoveredTotalCost = 0;
@@ -131,24 +130,12 @@
             return this.PromotionCoveredTotalCost + this.CalculateCost(priceList, this.StockKeepingUnitsNotcoveredByPromotion);
         }
 
-        // Call a passed-in delegate on each promotion to process it:
-        public void ProcessPromotionss(ProcessPromotionCallback processPromotion)
-        {
-            foreach (var promotion in this.AppliedPromotions)
-            {
-                if (promotion.PromotionID == 1)
-                { // Calling the delegate:
-                    processPromotion(this);
-                }
-            }
-        }
-
         /// <summary>
         /// No of times promotion can be applied.
         /// </summary>
         /// <param name="promotion">Promotion to Apply.</param>
         /// <returns>int.</returns>
-        public int NoOftimespromotionCanBeApplied(PromotionBase promotion)
+        public int NoOftimespromotionCanBeApplied(IPromotion promotion)
         {
             List<int> numberOfTimesEachPromotionCanBeApplied = new List<int>();
             foreach (var pc in promotion.PromotionConditions)
@@ -164,7 +151,7 @@
         /// </summary>
         /// <param name="promotionCondition">The promotion Condition that needs to be satisfied.</param>
         /// <returns>int.</returns>
-        public int NoOftimesPromotionConditionCanBeApplied(PromotionCondition promotionCondition)
+        public int NoOftimesPromotionConditionCanBeApplied(IPromotionCondition promotionCondition)
         {
             int remainder = this.StockKeepingUnits[promotionCondition.SkuId] % promotionCondition.Quantity;
             return (this.StockKeepingUnits[promotionCondition.SkuId] - remainder) / promotionCondition.Quantity;
