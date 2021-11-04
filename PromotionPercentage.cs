@@ -32,13 +32,7 @@ namespace PromotionEngine
         /// <param name="basket">basket to Apply Promotion to.</param>
         public override void ApplyPromotion(Basket basket)
         {
-            int noOfTimesPromotionCanBeApplied = this.NoOftimespromotionCanBeApplied(basket);
-            foreach (var pc in this.PromotionConditions)
-            {
-                basket.StockKeepingUnitsNotcoveredByPromotion[pc.Value.SkuId] = basket.StockKeepingUnits[pc.Value.SkuId] - (noOfTimesPromotionCanBeApplied * pc.Value.Quantity);
-            }
-
-            basket.PromotionCoveredTotalCost += this.SubstituteUnitPrice * noOfTimesPromotionCanBeApplied;
+          throw new Exception("PromotionPercentage.ApplyPromotion not implemented");
         }
     }
 }

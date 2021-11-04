@@ -17,7 +17,7 @@
         {
             this.StockKeepingUnits = new Dictionary<char, int>();
             this.StockKeepingUnitsNotcoveredByPromotion = new Dictionary<char, int>();
-            this.AppliedPromotions = new List<PromotionBase>();
+            this.AppliedPromotions = new PromotionList();
         }
 
         public int PromotionCoveredTotalCost { get; set; }
@@ -25,7 +25,7 @@
         /// <summary>
         /// Gets or sets AppliedPromotions Property.
         /// </summary>
-        public List<PromotionBase> AppliedPromotions { get; set; }
+        public PromotionList AppliedPromotions { get; set; }
 
         /// <summary>
         /// Gets or sets StockKeepingUnits Property.

@@ -1,5 +1,6 @@
 namespace TestProject
 {
+    using System;
     using System.Collections.Generic;
     using NUnit.Framework;
     using PromotionEngine;
@@ -66,6 +67,12 @@ namespace TestProject
                     SubstituteUnitPrice = 30,
                     PromotionType = PromotionType.Flat,
                 },
+
+                //new PromotionPercentage
+                //{
+                //    PromotionID = 4,
+                //    PromotionType = PromotionType.Percentage,
+                //},
             };
         }
 
@@ -73,7 +80,7 @@ namespace TestProject
         public void BasketHasPromotionsField()
         {
             Basket basket = new Basket();
-            if (basket.GetType().GetProperty("AppliedPromotions") == null || basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(List<PromotionBase>))
+            if (basket.GetType().GetProperty("AppliedPromotions") == null || basket.GetType().GetProperty("AppliedPromotions").PropertyType != typeof(PromotionList))
             {
                 Assert.Fail();
             }
@@ -159,11 +166,6 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (PromotionFlat p in this.promotions)
-            {
-                basket.AddPromotion(p);
-            }
-
             basket.SetQuantity('A', unitsA);
             basket.SetQuantity('B', unitsB);
             basket.SetQuantity('C', unitsC);
@@ -184,7 +186,7 @@ namespace TestProject
         {
             Basket basket = new Basket();
 
-            foreach (PromotionFlat p in this.promotions)
+            foreach (PromotionFlat p in this.promotions)//.Find(x => x.PromotionType == PromotionType.Flat))
             {
                 p.IsApplied = true;
                 basket.AddPromotion(p);
@@ -197,6 +199,22 @@ namespace TestProject
 
             int price = basket.CalculateCostWithPromotions(this.skusd);
             return price;
+        }
+
+        [Test]
+        public void ApplyingPromotionPercentageGeneratesException()
+        {
+            Basket basket = new Basket();
+
+            PromotionPercentage promotionPercentage = new PromotionPercentage { PromotionID = 4, PromotionType = PromotionType.Percentage };
+
+            basket.AddPromotion(promotionPercentage);
+
+
+            Assert.IsTrue(basket.AppliedPromotions.Count() == 1);
+            //Check an Argument Excpetion gets thrown if you try Adding More than 1 Condition for an SKU
+
+            Assert.Throws<Exception>(() => { basket.AppliedPromotions[0].ApplyPromotion(basket); }, null, new Exception("PromotionPercentage.ApplyPromotion not implemented"));
         }
 
         [TestCase(2, 1, ExpectedResult = 1)]

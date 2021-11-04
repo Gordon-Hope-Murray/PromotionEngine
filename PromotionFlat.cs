@@ -8,7 +8,7 @@
     /// <summary>
     /// Promotion.
     /// </summary>
-    public class PromotionFlat : PromotionBase, IPromotion, IEquatable<PromotionFlat>
+    public class PromotionFlat : PromotionBase, IPromotion, IEquatable<PromotionBase>, IEquatable<PromotionFlat>
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PromotionFlat"/> class.

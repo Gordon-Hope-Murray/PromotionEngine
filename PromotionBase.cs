@@ -1,6 +1,8 @@
 ﻿namespace PromotionEngine
 {
+    using System.Collections;
     using System.Collections.Generic;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
     public enum PromotionType
@@ -16,7 +18,7 @@
         Percentage,
     }
 
-    public abstract class PromotionBase
+    public abstract class PromotionBase : IEqualityComparer<PromotionBase>, IEnumerable<PromotionBase>
     {
         /// <summary>
         /// Gets or sets promotionID property.
@@ -71,6 +73,33 @@
             }
         }
 
+        public bool Equals([AllowNull] PromotionBase x, [AllowNull] PromotionBase y)
+        {
+            if (x.PromotionID == y.PromotionID)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public IEnumerator<PromotionBase> GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public int GetHashCode([DisallowNull] PromotionBase obj)
+        {
+            return PromotionID;
+        }
+
+        //public IEnumerator<PromotionBase> GetEnumerator()
+        //{
+        //    return (IEnumerator<PromotionBase>)(IEnumerator)this.GetEnumerator();
+        //}
+
         /// <summary>
         /// No of times promotion can be applied.
         /// </summary>
@@ -86,5 +115,16 @@
 
             return numberOfTimesEachPromotionCanBeApplied.Min(z => z);
         }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //IEnumerator IEnumerable.GetEnumerator()
+        //{
+        //   // return PromotionID;
+        //    return (IEnumerator<PromotionBase>)(IEnumerator)this.GetEnumerator();
+        //}
     }
 }
