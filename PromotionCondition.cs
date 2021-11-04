@@ -5,7 +5,7 @@
     /// <summary>
     /// PromotionCondition.
     /// </summary>
-    public class PromotionCondition : IEquatable<PromotionCondition>, IPromotionCondition
+    public class PromotionCondition : IEquatable<IPromotionCondition>,  IPromotionCondition
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PromotionCondition"/> class.
@@ -39,7 +39,7 @@
         /// </summary>
         /// <param name="basket">The basket that needs to be checked .</param>
         /// <returns>int.</returns>
-        public int NoOftimesPromotionConditionCanBeApplied(Basket basket)
+        public int NoOftimesPromotionConditionCanBeApplied(IBasket basket)
         {
             int remainder = basket.StockKeepingUnits[this.SkuId] % this.Quantity;
             return (basket.StockKeepingUnits[this.SkuId] - remainder) / this.Quantity;
@@ -50,7 +50,7 @@
         /// </summary>
         /// <param name="other">Promotion condition being compared to.</param>
         /// <returns>bool indicating equality.</returns>
-        public bool Equals(PromotionCondition other)
+        public bool Equals(IPromotionCondition other)
         {
             if (this.SkuId == other.SkuId)
             {

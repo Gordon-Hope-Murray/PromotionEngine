@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace PromotionEngine
+﻿namespace PromotionEngine
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Threading.Tasks;
+
     /// <summary>
     /// Represents Promotion with Percentage based rules.
     /// </summary>
@@ -30,9 +30,26 @@ namespace PromotionEngine
         /// Apply Percentage Promotion.
         /// </summary>
         /// <param name="basket">basket to Apply Promotion to.</param>
-        public override void ApplyPromotion(Basket basket)
+        public override void ApplyPromotion(IBasket basket)
         {
           throw new Exception("PromotionPercentage.ApplyPromotion not implemented");
+        }
+
+        /// <summary>
+        /// Implemts Equatable interface.
+        /// </summary>
+        /// <param name="other">promotion to compare with.</param>
+        /// <returns>bool.</returns>
+        public bool Equals(IPromotion other)
+        {
+            if (this.PromotionID == other.PromotionID)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
